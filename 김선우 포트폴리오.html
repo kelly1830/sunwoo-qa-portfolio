@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Engineer Portfolio Mockup</title>
+  <style>
+    :root {
+      --bg: #f7f9f6;
+      --paper: #ffffff;
+      --ink: #14213d;
+      --text: #283044;
+      --muted: #7a8290;
+      --line: #e8edf2;
+      --yellow: #f8c936;
+      --yellow-soft: #fff7d8;
+      --green: #8fc37f;
+      --mint: #eaf7ec;
+      --blue: #6aa5df;
+      --blue-soft: #edf6ff;
+      --red: #f25f4c;
+      --shadow: 0 18px 44px rgba(45, 64, 89, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .app {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 100vh;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #fbfefd 0%, #f5fbff 55%, #f7fbff 100%);
+      border-right: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .side-label {
+      text-align: center;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      color: #6f7785;
+      font-size: 12px;
+      margin: 2px 0 8px;
+    }
+
+    .mountain, .sea {
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .mountain .scene { font-size: 44px; line-height: 1; }
+    .mountain small, .sea small { display: block; color: var(--muted); font-weight: 800; margin-top: 4px; }
+
+    .road-wrap {
+      position: relative;
+      margin-top: 2px;
+      padding: 2px 0 0;
+      flex: 0 0 auto;
+      min-height: auto;
+    }
+
+    .road-svg {
+      position: absolute;
+      left: 40px;
+      top: 0;
+      width: 58px;
+      height: 560px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .car {
+      position: absolute;
+      left: 50px;
+      top: 8px;
+      z-index: 5;
+      font-size: 28px;
+      transform: translateY(0);
+      transition: transform 0.75s cubic-bezier(.22,1,.36,1);
+      filter: drop-shadow(0 8px 8px rgba(0,0,0,.2));
+      pointer-events: none;
+    }
+
+    .side-nav {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      gap: 7px;
+      margin-top: 8px;
+      padding-left: 22px;
+    }
+
+    .nav-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 8px 10px;
+      width: 158px;
+      margin: 0 auto;
+      border-radius: 18px;
+      color: #1d2939;
+      background: rgba(255,255,255,.72);
+      border: 1px solid transparent;
+      transition: .2s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--paper);
+      border-color: var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--green);
+      color: #fff;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .nav-item:first-child .num { background: var(--yellow); }
+    .nav-item:nth-child(5) .num, .nav-item:nth-child(6) .num { background: #68bdd0; }
+    .nav-item:nth-child(7) .num, .nav-item:nth-child(8) .num { background: #6b9dd6; }
+
+    .nav-copy strong { display: block; font-size: 12px; color: #111827; }
+    .nav-copy span { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+    .sea {
+      position: relative;
+      margin-top: 10px;
+      left: auto;
+      right: auto;
+      z-index: 4;
+      flex-shrink: 0;
+    }
+    .sea .scene { font-size: 34px; line-height: 1; }
+
+    .content {
+      padding: 0 28px 60px;
+    }
+
+    .topbar {
+      height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247,249,246,.84);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(232,237,242,.75);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #1d2939;
+    }
+
+    .brand .pin { font-size: 26px; }
+    .links { display: flex; gap: 24px; font-size: 13px; font-weight: 800; color: #1d2939; }
+
+    section {
+      scroll-margin-top: 84px;
+      margin: 16px 0;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      min-height: 360px;
+      background: linear-gradient(120deg, #fffdf4 0%, #ffffff 48%, #fff7d8 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #566071;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      margin-bottom: 18px;
+    }
+
+    .section-title .dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--yellow);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(36px, 4vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      color: #0b1f44;
+    }
+
+    .underline {
+      width: 32px;
+      height: 3px;
+      background: var(--yellow);
+      border-radius: 999px;
+      margin: 24px 0;
+    }
+
+    .lead {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #182235;
+      margin: 0 0 24px;
+      max-width: 620px;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #f6f8fa;
+      color: #273244;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .map-art {
+      min-height: 310px;
+      position: relative;
+      border-radius: 22px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.78) 2px, transparent 2px),
+        linear-gradient(rgba(255,255,255,.78) 2px, transparent 2px),
+        linear-gradient(135deg, #f9fbfd 0%, #ffffff 48%, #fff8de 100%);
+      background-size: 54px 54px, 54px 54px, cover;
+      overflow: hidden;
+    }
+
+    .map-art::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      top: 14%;
+      width: 78%;
+      height: 58%;
+      border: 16px solid rgba(248,201,54,.9);
+      border-left-color: transparent;
+      border-bottom-color: rgba(248,201,54,.55);
+      border-radius: 58% 42% 54% 46%;
+      transform: rotate(-18deg);
+      box-shadow: 0 14px 22px rgba(248,201,54,.16);
+    }
+
+    .map-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 72%, rgba(106,165,223,.18) 0 7%, transparent 8%),
+                  radial-gradient(circle at 62% 18%, rgba(143,195,127,.14) 0 8%, transparent 9%);
+      pointer-events: none;
+    }
+
+    .big-pin {
+      position: absolute;
+      left: 57%;
+      top: 42%;
+      width: 92px;
+      height: 92px;
+      border-radius: 50% 50% 50% 0;
+      background: linear-gradient(145deg, #ffd84d, #f6bc22);
+      transform: translate(-50%, -50%) rotate(-45deg);
+      box-shadow: 0 18px 28px rgba(248,201,54,.28);
+      z-index: 4;
+    }
+
+    .big-pin::after {
+      content: "";
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      left: 28px;
+      top: 28px;
+    }
+
+    .tree {
+      position: absolute;
+      font-size: 30px;
+      opacity: .9;
+      z-index: 3;
+    }
+
+    .t1 { left: 22%; top: 32%; }
+    .t2 { right: 15%; top: 24%; }
+    .t3 { left: 18%; bottom: 20%; }
+    .t4 { right: 28%; bottom: 18%; }
+
+    .assured {
+      position: absolute;
+      right: 30px;
+      bottom: 54px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 12px 22px rgba(45,64,89,.08);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 900;
+      z-index: 5;
+    }
+
+    .assured span {
+      color: var(--muted);
+      display:block;
+      font-weight:700;
+      margin-top:2px;
+    }
+
+    .two-col { display: grid; grid-template-columns: .85fr 1fr 1fr; gap: 18px; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      min-height: 150px;
+      box-shadow: 0 10px 22px rgba(45,64,89,.04);
+    }
+    .card.soft { background: #fbfcfd; }
+    .card h3 { margin: 0 0 12px; color: #172033; letter-spacing: -0.03em; }
+    .card p, .card li { margin: 0; color: #4c5565; line-height: 1.65; font-size: 14px; }
+    .card ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+
+    .avatar {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      background: radial-gradient(circle at 50% 34%, #ffe1c7 0 25%, transparent 26%), #dff0e4;
+      display: grid;
+      place-items: center;
+      font-size: 78px;
+    }
+
+    .info-list { display: grid; gap: 14px; }
+    .info-list b { display:block; color:#172033; margin-bottom:4px; font-size:13px; }
+    .info-list span { color: var(--muted); font-size: 13px; }
+
+    .process-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+    .step {
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 12px;
+      min-height: 130px;
+    }
+    .step-icon { font-size: 30px; margin-bottom: 10px; }
+    .step h3 { font-size: 14px; margin: 0 0 6px; color: #172033; }
+    .step p { font-size: 12px; color: var(--muted); line-height: 1.45; margin:0; }
+
+    .table-wrap { display: grid; grid-template-columns: 1fr 210px; gap: 18px; align-items: stretch; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); font-size: 13px; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+    th { background: #f6f8fa; color: #667085; font-size: 11px; }
+    td { color: #3b4658; }
+    .pass { color: #159947; font-weight: 900; }
+
+    .download-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+    .excel { font-size: 56px; }
+    .btn {
+      display: inline-flex;
+      padding: 9px 22px;
+      border-radius: 999px;
+      border: 1px solid #9fc2ec;
+      color: #3574bd;
+      font-size: 12px;
+      font-weight: 900;
+      margin-top: 12px;
+    }
+
+    .bug-card {
+      display: grid;
+      grid-template-columns: 150px 1fr 180px;
+      gap: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+    }
+    .bug-id { color: var(--red); font-weight: 900; }
+    .critical { display:inline-flex; border:1px solid #ffd3cd; color:var(--red); border-radius:999px; padding:5px 10px; font-size:12px; font-weight:900; margin-left:8px; }
+    .bug-meta { display:grid; gap:10px; font-size:13px; color:#4c5565; }
+    .bug-meta b { color:#172033; }
+    .bug-detail { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .bug-detail h4 { margin:0 0 8px; font-size:13px; color:#172033; }
+    .bug-detail p { margin:0; color:var(--muted); line-height:1.55; font-size:13px; }
+    .bug-status { border-left:1px solid var(--line); padding-left:18px; display:grid; gap:8px; font-size:13px; }
+    .bug-status b { color:#172033; }
+    .open { color:var(--red); font-weight:900; }
+
+    .tools-grid { display:grid; grid-template-columns: repeat(9, 1fr); gap:12px; }
+    .tool {
+      text-align:center;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px 8px;
+      min-height:112px;
+    }
+    .tool .icon { font-size:34px; margin-bottom:8px; }
+    .tool strong { display:block; font-size:12px; color:#172033; }
+    .tool span { display:block; color:var(--muted); font-size:11px; margin:3px 0 8px; }
+    .level { height:5px; width:66%; background:#d9e9fb; border-radius:999px; margin:0 auto; position:relative; }
+    .level::after { content:""; position:absolute; left:0; top:0; bottom:0; width:68%; border-radius:999px; background:#5e9be0; }
+
+    .goal-grid { display:grid; grid-template-columns: 220px 1fr 180px; gap:18px; }
+    .atoms { font-size:56px; font-weight:900; color:#467bd7; display:grid; place-items:center; }
+    .goal-icons { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+    .goal-item { text-align:center; padding:18px 10px; border:1px solid var(--line); border-radius:18px; background:#fff; }
+    .goal-item .icon { font-size:28px; margin-bottom:8px; }
+    .goal-item strong { display:block; font-size:13px; }
+    .goal-item span { font-size:11px; color:var(--muted); }
+
+    @media (max-width: 1180px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display:none; }
+      .hero, .two-col, .three-col, .four-col, .process-row, .table-wrap, .bug-card, .bug-detail, .tools-grid, .goal-grid, .goal-icons { grid-template-columns: 1fr; }
+      .content { padding:0 18px 50px; }
+      .links { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="side-label">START</div>
+      <div class="mountain"><div class="scene">⛰️</div><small>Mountain</small></div>
+      <div class="road-wrap">
+        <svg class="road-svg" viewBox="0 0 80 760" preserveAspectRatio="none">
+          <path d="M40 0 C78 70 5 105 42 170 C80 240 8 290 42 360 C76 430 4 490 40 560 C74 632 18 690 40 760" fill="none" stroke="#7c858d" stroke-width="12" stroke-linecap="round"/>
+          <path d="M40 0 C78 70 5 105 42 170 C80 240 8 290 42 360 C76 430 4 490 40 560 C74 632 18 690 40 760" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="16 16" stroke-linecap="round"/>
+        </svg>
+        <div class="car">🚕</div>
+        <nav class="side-nav">
+          <a class="nav-item" href="#hero"><span class="num">01</span><span class="nav-copy"><strong>Hero</strong><span>자기소개</span></span></a>
+          <a class="nav-item" href="#about"><span class="num">02</span><span class="nav-copy"><strong>About Me</strong><span>개인 PR</span></span></a>
+          <a class="nav-item" href="#education"><span class="num">03</span><span class="nav-copy"><strong>Education</strong><span>학력</span></span></a>
+          <a class="nav-item" href="#license"><span class="num">04</span><span class="nav-copy"><strong>Certification</strong><span>자격증 & 어학</span></span></a>
+          
+          <a class="nav-item" href="#tools"><span class="num">05</span><span class="nav-copy"><strong>Tools</strong><span>도구 활용 경험</span></span></a>
+          <a class="nav-item" href="#cases"><span class="num">06</span><span class="nav-copy"><strong>Test Case</strong><span>테스트 케이스 샘플</span></span></a>
+          <a class="nav-item" href="#bugs"><span class="num">07</span><span class="nav-copy"><strong>Bug Report</strong><span>버그 리포트 샘플</span></span></a>
+          <a class="nav-item" href="#process"><span class="num">08</span><span class="nav-copy"><strong>QA Process</strong><span>테스트 업무 흐름</span></span></a>
+          
+        </nav>
+      </div>
+      <div class="sea"><div class="scene">🌊</div><small>GOAL</small></div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <a class="brand" href="#hero"><span class="pin">📍</span><span>QA Engineer Portfolio</span></a>
+        <div class="links"><a href="#hero">Home</a><a href="#cases">Test Case</a><a href="#bugs">Bug Report</a><a href="#about">Contact</a></div>
+      </header>
+
+      <section id="hero" class="panel hero">
+        <div>
+          <div class="section-title"><span class="dot">01</span>Hero / 자기소개</div>
+          <h1>Quality in every detail,<br>Trust in every journey.</h1>
+          <div class="underline"></div>
+          <p class="lead">사용자의 관점에서 문제를 발견하고 서비스 품질 향상에 기여하는 신입 테스트 엔지니어 김선우 포트폴리오입니다.</p>
+          <div class="chips">
+            <span class="chip">📊 Analytical</span><span class="chip">🔍 Detail-oriented</span><span class="chip">💡 Problem Solver</span><span class="chip">🤝 Collaborative</span>
+          </div>
+        </div>
+        <div class="map-art">
+          <div class="big-pin"></div>
+          <span class="tree t1">🌳</span>
+          <span class="tree t2">🌳</span>
+          <span class="tree t3">🌳</span>
+          <span class="tree t4">🌳</span>
+          <div class="assured">✅ <div>Quality Assured<span>Journey Continues</span></div></div>
+        </div>
+      </section>
+
+      <section id="about" class="panel">
+        <div class="section-title"><span class="dot">02</span>About Me / 개인 PR</div>
+
+        <div style="display:grid;grid-template-columns:1.4fr .8fr;gap:18px;margin-bottom:18px;align-items:stretch;">
+          <article class="card soft" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fffdf4 0%,#fff8d9 100%);position:relative;overflow:hidden;min-height:260px;">
+            <div style="position:absolute;left:22px;top:18px;font-size:72px;color:rgba(248,201,54,.18);font-weight:900;font-family:serif;line-height:1;">“</div>
+            <div style="position:absolute;right:22px;bottom:-8px;font-size:72px;color:rgba(248,201,54,.18);font-weight:900;font-family:serif;line-height:1;">”</div>
+
+            <div style="position:relative;z-index:2;padding:18px 14px;">
+              <p style="margin:0;color:#273244;line-height:2;font-size:13.5px;font-weight:500;letter-spacing:-0.02em;word-break:keep-all;">
+                안녕하세요. 신입 테스팅 엔지니어 지원자 김선우입니다.<br>
+                다양한 운영 업무를 통해 시스템 이슈 대응과 프로세스 문서화 경험을 쌓아왔습니다.<br>
+                일본 호텔 운영 당시 글로벌 OTA 리뷰를 분석해 고객 클레임 원인을 파악하고 운영 개선안을 적용한 경험이 있습니다.<br>
+                현재 AI 활용 SW 테스팅 과정을 통해 테스트 지식을 학습하며, 테스트 케이스 작성과 Jira 기반 버그 리포트 문서화를 수행했습니다.<br>
+                문제 분석과 꼼꼼한 검증 역량을 바탕으로 신입 테스트 엔지니어로 기여하겠습니다.
+              </p>
+            </div>
+          </article>
+
+          <article class="card" style="padding:18px 20px;min-height:auto;display:flex;align-items:center;">
+            <div style="display:grid;grid-template-columns:70px 1fr;row-gap:10px;column-gap:12px;width:100%;font-size:13px;line-height:1.5;">
+              <b style="color:#172033;">Name</b><span style="color:#667085;">김선우</span>
+              <b style="color:#172033;">Email</b><span style="color:#667085;word-break:break-all;">sunwoo1global@gmail.com</span>
+              <b style="color:#172033;">Location</b><span style="color:#667085;">경기도 광명시 철산동</span>
+              <b style="color:#172033;">Blog</b><span><a href="https://blog.naver.com/tabi_tatu" target="_blank" rel="noopener noreferrer" style="color:#356fb6;word-break:break-all;font-weight:600;text-decoration:underline;">blog.naver.com/tabi_tatu</a></span>
+              
+            </div>
+          </article>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch;">
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:22px;padding:20px;color:#172033;box-shadow:0 8px 20px rgba(45,64,89,.05);min-height:170px;">
+            <div style="font-size:18px;margin-bottom:10px;opacity:.9;">🌏</div>
+            <h3 style="margin:0 0 10px;font-size:17px;color:#172033;letter-spacing:-0.02em;">글로벌 경험</h3>
+            <p style="margin:0;color:#667085;line-height:1.7;font-size:13px;">
+              일본 현지 2년+ 근무,<br>
+              JLPT N1 비즈니스 일본어,<br>
+              OPIC IH 영어 회화
+            </p>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:22px;padding:20px;color:#172033;box-shadow:0 8px 20px rgba(45,64,89,.05);min-height:170px;">
+            <div style="font-size:18px;margin-bottom:10px;opacity:.9;">📊</div>
+            <h3 style="margin:0 0 10px;font-size:17px;color:#172033;letter-spacing:-0.02em;">데이터 기반 분석</h3>
+            <p style="margin:0;color:#667085;line-height:1.7;font-size:13px;">
+              시설 비용 분석 및 보고서 작성 · 6곳 OTA 플랫폼 관리자 페이지 운영
+            </p>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:22px;padding:20px;color:#172033;box-shadow:0 8px 20px rgba(45,64,89,.05);min-height:170px;">
+            <div style="font-size:18px;margin-bottom:10px;opacity:.9;">🔎</div>
+            <h3 style="margin:0 0 10px;font-size:17px;color:#172033;letter-spacing:-0.02em;">QA 실무 경험</h3>
+            <p style="margin:0;color:#667085;line-height:1.7;font-size:13px;">
+              SW 테스팅 실무 교육 수강,<br>
+              TestRail · Playwright 학습
+            </p>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:22px;padding:20px;color:#172033;box-shadow:0 8px 20px rgba(45,64,89,.05);min-height:170px;">
+            <div style="font-size:18px;margin-bottom:10px;opacity:.9;">🤝</div>
+            <h3 style="margin:0 0 10px;font-size:17px;color:#172033;letter-spacing:-0.02em;">커뮤니케이션</h3>
+            <p style="margin:0;color:#667085;line-height:1.7;font-size:13px;">
+              네이버 협력사 PM,<br>
+              통역사 7명 일정 조율 경험
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="education" class="panel">
+        <div class="section-title"><span class="dot">03</span>Education / 학력</div>
+
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:stretch;">
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:24px;padding:26px;box-shadow:0 10px 24px rgba(45,64,89,.05);position:relative;overflow:hidden;">
+            <div style="position:absolute;right:-16px;top:-16px;width:90px;height:90px;border-radius:50%;background:rgba(248,201,54,.12);"></div>
+
+            <div style="position:relative;z-index:2;">
+              <div style="display:inline-flex;padding:8px 12px;border-radius:999px;background:#fff7d8;color:#8a6a00;font-size:12px;font-weight:800;margin-bottom:18px;">
+                2020.03 – 2022.02
+              </div>
+
+              <h3 style="margin:0 0 10px;font-size:24px;color:#172033;letter-spacing:-0.03em;line-height:1.3;">
+                사이버한국외국어대학교
+              </h3>
+
+              <p style="margin:0;color:#667085;font-size:15px;line-height:1.7;">
+                영어학부
+              </p>
+            </div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:24px;padding:26px;box-shadow:0 10px 24px rgba(45,64,89,.05);position:relative;overflow:hidden;">
+            <div style="position:absolute;right:-16px;top:-16px;width:90px;height:90px;border-radius:50%;background:rgba(106,165,223,.12);"></div>
+
+            <div style="position:relative;z-index:2;">
+              <div style="display:inline-flex;padding:8px 12px;border-radius:999px;background:#edf6ff;color:#356fb6;font-size:12px;font-weight:800;margin-bottom:18px;">
+                2018.03 – 2020.02
+              </div>
+
+              <h3 style="margin:0 0 10px;font-size:24px;color:#172033;letter-spacing:-0.03em;line-height:1.3;">
+                서일대학교
+              </h3>
+
+              <p style="margin:0;color:#667085;font-size:15px;line-height:1.7;">
+                비즈니스일본어과
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="license" class="panel">
+        <div class="section-title"><span class="dot">04</span>Certification & Language / 자격증 & 어학</div>
+
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;align-items:stretch;">
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="margin-bottom:10px;display:flex;justify-content:center;align-items:center;">
+              <div style="font-size:24px;">🛡️</div>
+            </div>
+            <h3 style="margin:0 0 8px;font-size:16px;color:#172033;">CSTS 일반등급</h3>
+            <p style="margin:0;color:#667085;font-size:11px;line-height:1.6;white-space:nowrap;">한국정보통신기술협회</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2026.05</div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="font-size:24px;margin-bottom:10px;">🗣️</div>
+            <h3 style="margin:0 0 8px;font-size:16px;color:#172033;">OPIC IH</h3>
+            <p style="margin:0;color:#667085;font-size:12px;line-height:1.6;white-space:nowrap;">외국어말하기평가</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2026.04</div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="font-size:24px;margin-bottom:10px;">📄</div>
+            <h3 style="margin:0 0 8px;font-size:16px;color:#172033;">ITQ 한셀 A</h3>
+            <p style="margin:0;color:#667085;font-size:12px;line-height:1.6;white-space:nowrap;">정보기술자격 A등급</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2023.06</div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="font-size:24px;margin-bottom:10px;">🎤</div>
+            <h3 style="margin:0 0 8px;font-size:16px;color:#172033;">ITQ 한쇼 A</h3>
+            <p style="margin:0;color:#667085;font-size:12px;line-height:1.6;white-space:nowrap;">정보기술자격 A등급</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2023.06</div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="font-size:24px;margin-bottom:10px;">📜</div>
+            <h3 style="margin:0 0 8px;font-size:16px;color:#172033;">한국사 3급</h3>
+            <p style="margin:0;color:#667085;font-size:11px;line-height:1.6;white-space:nowrap;">한국사능력검정시험</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2023.02</div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="font-size:24px;margin-bottom:10px;">🗣️</div>
+            <h3 style="margin:0 0 8px;font-size:16px;color:#172033;">JLPT N1</h3>
+            <p style="margin:0;color:#667085;font-size:12px;line-height:1.6;white-space:nowrap;">일본어능력시험 1급</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2023.01</div>
+          </article>
+
+          <article style="background:#ffffff;border:1px solid #e6edf5;border-radius:20px;padding:18px;text-align:center;box-shadow:0 8px 20px rgba(45,64,89,.05);">
+            <div style="font-size:24px;margin-bottom:10px;">🚗</div>
+            <h3 style="margin:0 0 8px;font-size:14px;color:#172033;line-height:1.5;word-break:keep-all;">
+                자동차운전면허<br>2종 자동
+              </h3>
+            <p style="margin:0;color:#667085;font-size:12px;line-height:1.6;white-space:nowrap;">경찰청</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:800;color:#356fb6;">2021.09</div>
+          </article>
+
+        </div>
+      </section>
+
+      <section id="tools" class="panel">
+        <div class="section-title"><span class="dot">05</span>Tool Experience / 도구 활용 경험</div>
+        <div class="tools-grid">
+          <div class="tool"><div class="icon">📊</div><strong>Excel</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">🧩</div><strong>Jira</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">📮</div><strong>Postman</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">🌿</div><strong>Git/Github</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">⚙️</div><strong>Jenkins</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">🎭</div><strong>Playwright</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">🗄️</div><strong>SQL</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">📱</div><strong>ADB</strong><span>Intermediate</span><div class="level"></div></div>
+          <div class="tool"><div class="icon">🤖</div><strong>Codex</strong><span>Intermediate</span><div class="level"></div></div>
+        </div>
+      </section>
+
+      <section id="cases" class="panel">
+        <div class="section-title"><span class="dot">06</span>TEST CASE PORTFOLIO / 테스트 케이스 샘플</div>
+        <p style="margin:-4px 0 22px;color:var(--muted);font-size:14px;">
+          Slack 주요 커뮤니케이션 기능 기준 대표 테스트 케이스 6건 — PASS / FAIL 혼합 표시
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>테스트 시나리오</th>
+                <th>우선순위</th>
+                <th>테스트 유형</th>
+                <th>예상 결과</th>
+                <th>결과</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TC_DM_001</td>
+                <td>DM 일반 텍스트 메시지 전송</td>
+                <td>High</td>
+                <td>Functional</td>
+                <td>입력한 메시지가 DM 대화창에 정상 표시</td>
+                <td class="pass">PASS</td>
+              </tr>
+              <tr>
+                <td>TC_DM_002</td>
+                <td>빈 메시지 전송 제한 확인</td>
+                <td>High</td>
+                <td>Functional</td>
+                <td>빈 메시지는 전송되지 않고 버튼이 비활성화</td>
+                <td class="pass">PASS</td>
+              </tr>
+              <tr>
+                <td>TC_CH_003</td>
+                <td>채널 메시지 작성 및 전송</td>
+                <td>High</td>
+                <td>Functional</td>
+                <td>채널 타임라인에 메시지가 즉시 표시</td>
+                <td class="pass">PASS</td>
+              </tr>
+              <tr>
+                <td>TC_THREAD_004</td>
+                <td>스레드 답글 작성 기능 검증</td>
+                <td>Medium</td>
+                <td>Functional</td>
+                <td>원본 메시지 하위에 답글이 정상 등록</td>
+                <td style="color:var(--red);font-weight:900;">FAIL</td>
+              </tr>
+              <tr>
+                <td>TC_MENTION_005</td>
+                <td>멘션 알림 수신 확인</td>
+                <td>Medium</td>
+                <td>Functional</td>
+                <td>멘션 대상 사용자에게 알림 배지가 표시</td>
+                <td class="pass">PASS</td>
+              </tr>
+              <tr>
+                <td>TC_FILE_006</td>
+                <td>파일 업로드 및 공유 검증</td>
+                <td>Medium</td>
+                <td>Non-functional</td>
+                <td>허용 확장자 파일이 채널에 업로드되고 미리보기 표시</td>
+                <td style="color:var(--red);font-weight:900;">FAIL</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <aside class="download-card" style="background:#fff;border:1px solid #e6edf5;border-radius:28px;padding:34px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 10px 24px rgba(45,64,89,.05);">
+            <div style="font-size:56px;margin-bottom:18px;">📗</div>
+
+            <h4 style="margin:0 0 14px;font-size:22px;line-height:1.35;color:#14213d;font-weight:900;letter-spacing:-0.04em;">
+              Slack 테스트 케이스<br>문서
+            </h4>
+
+            <p style="margin:0 0 26px;color:#283044;font-size:15px;line-height:1.6;word-break:keep-all;">
+              Slack 주요 커뮤니케이션<br>기능_시나리오 검증.xlsx
+            </p>
+
+            <a
+              href="https://docs.google.com/spreadsheets/d/1pV6MZD0InXtKLMGJdwaNQqTizGP2ekzK/edit?usp=drive_link&ouid=111930529886808594459&rtpof=true&sd=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;max-width:190px;padding:12px 20px;border-radius:999px;border:1px solid #9fc2ec;color:#3574bd;background:#fff;font-size:13px;font-weight:900;text-decoration:none;"
+            >
+              👁 문서보기
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section id="bugs" class="panel">
+        <div class="section-title"><span class="dot">07</span>Bug Report Sample / 버그 리포트 샘플</div>
+
+        <article class="bug-card">
+          <div>
+            <span class="bug-id">● KAN-12</span><span class="critical">High</span>
+            <div class="bug-meta" style="margin-top:18px">
+              <div><b>환경</b><br>Windows 11 / Chrome</div>
+              <div><b>서비스</b><br>Slack Web</div>
+              <div><b>발생 빈도</b><br>간헐적</div>
+            </div>
+          </div>
+
+          <div>
+            <h3>Slack 오류로 인해 스레드 로딩이 실패한 현상</h3>
+            <div class="bug-detail">
+              <div>
+                <h4>재현 단계</h4>
+                <p>1. Slack 웹 서비스 접속<br>2. 스레드 포함 메시지 클릭<br>3. 스레드 패널 오픈<br>4. Try Again 오류 확인</p>
+              </div>
+              <div>
+                <h4>예상 결과</h4>
+                <p>스레드 메시지와 답글 목록이 정상적으로 표시되어야 함</p>
+              </div>
+              <div>
+                <h4>첨부 문서</h4>
+                <p style="margin:0 0 18px;color:#7a8290;font-size:13px;line-height:1.6;">
+                  📄 KAN-12 Bug Report.pdf
+                </p>
+                <a
+                  href="https://drive.google.com/file/d/1xOP-N6BcxSVkTubpazGKG_ohIxgAaiid/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 28px;border-radius:999px;border:1px solid #9fc2ec;color:#3574bd;background:#fff;font-size:13px;font-weight:900;text-decoration:none;"
+                >
+                  👁 문서보기
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bug-status">
+            <div><b>상태</b><br><span class="open">Open</span></div>
+            <div><b>우선순위</b><br>P1</div>
+            <div><b>담당자</b><br>Kim Sunwoo</div>
+          </div>
+        </article>
+
+        <div style="height:18px"></div>
+
+        <article class="bug-card">
+          <div>
+            <span class="bug-id">● KAN-17</span><span class="critical">Medium</span>
+            <div class="bug-meta" style="margin-top:18px">
+              <div><b>환경</b><br>Windows 11 / Chrome</div>
+              <div><b>서비스</b><br>Slack Web</div>
+              <div><b>발생 빈도</b><br>100%</div>
+            </div>
+          </div>
+
+          <div>
+            <h3>DM 새 창 실행 시 일반 브라우저 기능을 사용할 수 없는 현상</h3>
+            <div class="bug-detail">
+              <div>
+                <h4>재현 단계</h4>
+                <p>1. Slack 웹 서비스 접속<br>2. DM 채널 진입<br>3. 새 창으로 열기 클릭<br>4. 일반 브라우저 기능 제한 확인</p>
+              </div>
+              <div>
+                <h4>예상 결과</h4>
+                <p>새 창에서도 일반 Chrome 브라우저처럼 탭 추가 및 멀티 작업이 가능해야 함</p>
+              </div>
+              <div>
+                <h4>첨부 문서</h4>
+                <p style="margin:0 0 18px;color:#7a8290;font-size:13px;line-height:1.6;">
+                  📄 KAN-17 Bug Report.pdf
+                </p>
+                <a
+                  href="https://drive.google.com/file/d/1RNu_HeMMJXQC_iYNsLiQoPzBynvcss_V/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 28px;border-radius:999px;border:1px solid #9fc2ec;color:#3574bd;background:#fff;font-size:13px;font-weight:900;text-decoration:none;"
+                >
+                  👁 문서보기
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bug-status">
+            <div><b>상태</b><br><span class="open">Open</span></div>
+            <div><b>우선순위</b><br>P2</div>
+            <div><b>담당자</b><br>Kim Sunwoo</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="process" class="panel">
+        <div class="section-title"><span class="dot">08</span>QA Process / 테스트 업무 흐름</div>
+
+        <div class="process-row" style="grid-template-columns:repeat(4,1fr);gap:16px;">
+          <article class="step" style="min-height:180px;display:flex;flex-direction:column;justify-content:center;">
+            <div class="step-icon">⚙️</div>
+            <h3>CI/CD Pipeline</h3>
+            <p>
+              Jenkins 기반 CI/CD 구조와
+              자동화 테스트 흐름에 대한 기본 이해
+            </p>
+          </article>
+
+          <article class="step" style="min-height:180px;display:flex;flex-direction:column;justify-content:center;">
+            <div class="step-icon">📊</div>
+            <h3>TestOps</h3>
+            <p>
+              테스트 결과 관리와
+              품질 지표 기반 운영 방식 이해
+            </p>
+          </article>
+
+          <article class="step" style="min-height:180px;display:flex;flex-direction:column;justify-content:center;">
+            <div class="step-icon">🔄</div>
+            <h3>Agile Testing</h3>
+            <p>
+              애자일 개발 환경의
+              반복적 테스트 및 협업 구조 이해
+            </p>
+          </article>
+
+          <article class="step" style="min-height:180px;display:flex;flex-direction:column;justify-content:center;">
+            <div class="step-icon">🤖</div>
+            <h3>LLM 기반 테스팅</h3>
+            <p>
+              AI와 LLM을 활용한
+              테스트 설계·문서화 활용 방식 학습
+            </p>
+          </article>
+        </div>
+      </section>
+
+      
+    <footer style="margin-top:40px;padding:36px 20px 52px;text-align:center;border-top:2px solid #f8ecb8;background:linear-gradient(180deg,#fffefc 0%,#fffdf4 100%);">
+        <div style="font-size:15px;font-weight:600;color:#3f4652;margin-bottom:10px;letter-spacing:-0.02em;">
+          Designed & Built by <span style="color:#2f3640;font-weight:800;">김선우</span>
+        </div>
+
+        <div style="font-size:10px;color:#5b6470;line-height:1.8;font-weight:500;">
+          신입 소프트웨어 테스팅 엔지니어 · Quality & Trust
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const sectionIds = ['hero', 'about', 'education', 'license', 'tools', 'cases', 'bugs', 'process'];
+    const car = document.querySelector('.car');
+    const navItems = document.querySelectorAll('.nav-item');
+    const carStops = [0, 62, 124, 186, 248, 310, 372, 434];
+
+    function updateRoad() {
+      let activeIndex = 0;
+      sectionIds.forEach((id, index) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.45) {
+          activeIndex = index;
+        }
+      });
+
+      if (car) {
+        car.style.transform = `translateY(${carStops[activeIndex]}px)`;
+      }
+
+      navItems.forEach((item, index) => {
+        item.classList.toggle('active', index === activeIndex);
+      });
+    }
+
+    window.addEventListener('scroll', updateRoad, { passive: true });
+    window.addEventListener('load', updateRoad);
+    window.addEventListener('resize', updateRoad);
+  </script>
+</body>
+</html>
